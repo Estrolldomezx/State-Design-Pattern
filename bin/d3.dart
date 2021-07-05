@@ -38,32 +38,35 @@ class Stateful {
   set state(State newState) => _state = newState;
 
   void set(hours, minutes) {
-    print("Set the time : //setState");
+    print('//---setState---//');
     // _state.handler(this);
-    inc(hours, minutes);
+    String increment = stdin.readLineSync();
+    String commandInc = increment.toString();
+    if (commandInc == 'inc') {
+      inc(hours, minutes);
+    }
   }
 
   void inc(hours, minutes) {
-    print("Increment the time to :");
-    // var new_hours = int.parse(hours);
+    print('//---Increment State---//');
     hours = (hours+1)%24;
-    // print(new_hours);
-    print(hours);
-    String inc2 = stdin.readLineSync();
-    String commandInc2 = inc2.toString();
-    if (commandInc2 == 'inc') {
-      inc2(minutes);
-    } else {
-    }
+    print('Increment the time to : $hours : $minutes');
+
+    // String inc2 = stdin.readLineSync();
+    // String commandInc2 = inc2.toString();
+    // if (commandInc2 == 'inc') {
+    //   inc2(minutes);
+    // } else {
+    // }
   }
   
-  void inc2(minutes)
+  // void inc2(minutes)
 }
 
 void main() {
   var timeState = Stateful(StatusOff());
   while (true) {
-    print("The timeState is ${timeState.state}. Please turn on!");
+    print('The timeState is ${timeState.state}. Please turn on!');
     String command = stdin.readLineSync();
     List<String> commandList = command.toString().split(' ');
     if (commandList[1] != 0 && commandList[2] != 0) {
@@ -72,7 +75,7 @@ void main() {
       var minutes = commandList[2];
       var h = int.parse(hours);
       var m = int.parse(minutes);
-      print("Now, The time is ${hours} : ${minutes}");
+      print('Now, The time is $hours : $minutes');
       String command = stdin.readLineSync();
       List<String> command_set_inc = command.toString().split(' ');
       //setting Hours
