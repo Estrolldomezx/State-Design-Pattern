@@ -2,30 +2,29 @@ import 'dart:io';
 
 abstract class State {
   void handler(Stateful context);
+  @override
   String toString();
 }
 
 class StatusOn implements State {
   handler(Stateful context) {
-    print("");
     context.state = StatusOff();
   }
 
   @override
   String toString() {
-    return "on";
+    return 'on';
   }
 }
 
 class StatusOff implements State {
   handler(Stateful context) {
-    print("");
     context.state = StatusOn();
   }
 
   @override
   String toString() {
-    return "off";
+    return 'off';
   }
 }
 
@@ -39,7 +38,6 @@ class Stateful {
 
   void set(hours, minutes) {
     print('//---setState---//');
-    // _state.handler(this);
     String increment = stdin.readLineSync();
     String commandInc = increment.toString();
     if (commandInc == 'inc') {
@@ -52,19 +50,24 @@ class Stateful {
     hours = (hours+1)%24;
     print('Increment the time to : $hours : $minutes');
 
-    // String inc2 = stdin.readLineSync();
-    // String commandInc2 = inc2.toString();
-    // if (commandInc2 == 'inc') {
-    //   inc2(minutes);
-    // } else {
-    // }
+    String increment2 = stdin.readLineSync();
+    String commandInc2 = increment2.toString();
+    if (commandInc2 == 'inc') {
+      inc2(hours, minutes);
+    } else {
+      set(hours, minutes);
+    }
   }
   
-  // void inc2(minutes)
+  void inc2(hours, minutes){
+    minutes = (minutes+1)%60;
+    print('Increment the time to : $hours : $minutes');
+  }
 }
 
 void main() {
   var timeState = Stateful(StatusOff());
+  var hours, minutes;
   while (true) {
     print('The timeState is ${timeState.state}. Please turn on!');
     String command = stdin.readLineSync();
@@ -82,8 +85,17 @@ void main() {
       if (command_set_inc[0] == 'set') {
         timeState.set(h, m);
       }
-    } else {
+    } else if(commandList[1] == 0 && commandList[2] == 0){
       //setting Hours
+      var hours = commandList[1];
+      var minutes = commandList[2];
+      var h = int.parse(hours);
+      var m = int.parse(minutes);
+      timeState.set(h, m);
+    }
+    else {
+      print('Unknown command...');
+      exit(1);
     }
   }
 }
